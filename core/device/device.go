@@ -67,6 +67,10 @@ func AutoGetDevices() *EtherTable {
 						fmt.Println(fmt.Sprintf("%v", err))
 						continue
 					}
+					fmt.Printf("Packet: %v\n", packet)
+					for _, layer := range packet.Layers() {
+						fmt.Println(fmt.Sprintf("layer %v", layer.LayerType()))
+					}
 					if dnsLayer := packet.Layer(layers.LayerTypeDNS); dnsLayer != nil {
 						dns, _ := dnsLayer.(*layers.DNS)
 						if !dns.QR {
