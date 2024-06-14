@@ -34,6 +34,7 @@ func AutoGetDevices() *EtherTable {
 	// 在初始上下文的基础上创建一个有取消功能的上下文
 	ctx, cancel := context.WithCancel(ctx)
 	for _, drviceName := range keys {
+		fmt.Sprintln(drviceName)
 		go func(drviceName string, domain string, ctx context.Context) {
 			var (
 				snapshot_len int32         = 1024
@@ -89,6 +90,8 @@ func AutoGetDevices() *EtherTable {
 								}
 							}
 						}
+					} else {
+						fmt.Println("packet.Layer is nil")
 					}
 				}
 			}
