@@ -63,14 +63,17 @@ func AutoGetDevices() *EtherTable {
 					packet, err := packetSource.NextPacket()
 					gologger.Printf(".")
 					if err != nil {
+						fmt.Println(fmt.Sprintf("%v", err))
 						continue
 					}
 					if dnsLayer := packet.Layer(layers.LayerTypeDNS); dnsLayer != nil {
 						dns, _ := dnsLayer.(*layers.DNS)
 						if !dns.QR {
+							gologger.Printf("!")
 							continue
 						}
 						for _, v := range dns.Questions {
+							fmt.Println(v.Name)
 							if string(v.Name) == domain {
 								ethLayer := packet.Layer(layers.LayerTypeEthernet)
 								if ethLayer != nil {
